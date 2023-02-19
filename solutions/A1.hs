@@ -27,14 +27,20 @@ _SEP_ = "_|_"
 -- *** Assignment 1-2 *** --
 
 -- Q#06
-data Square
+data Square = X | O | Void  deriving (Show, Eq)
+
 
 
 -- Q#07
-data GameState
+data GameState = Xwon | Owon | Tie | InProgress  deriving (Show, Eq)
 
 
 -- Q#08
+type Player = Square
+type Row = [Square]
+type Line = [Square]
+type Board = [Row]
+type Move = (Int,Int)
 
 
 
@@ -42,21 +48,35 @@ data GameState
 
 
 -- Q#09
+getFirstPlayer :: Bool -> Player
+getFirstPlayer s = if s 
+    then X
+    else O
 
-getFirstPlayer = undefined
 
-
-getFirstPlayer_ = undefined
+getFirstPlayer_ :: Bool -> Player
+getFirstPlayer_ s 
+    | s==True = X
+    | s==False = O
 
 -- Q#10
-
-showGameState gs = undefined
+showGameState :: GameState -> [Char]
+showGameState gs = case gs of
+    Xwon        -> "X has won"
+    Owon        -> "O has won"
+    Tie         -> "Tie"
+    InProgress  -> "The game is in progress"
 
 -- Q#11
-
-switchPlayer = undefined
+switchPlayer :: Player -> Player
+switchPlayer X = O
+switchPlayer O = X
+switchPlayer _  = Void
 
 
 -- Q#12
-
-showSquare = undefined
+showSquare :: Square -> [Char]
+showSquare s
+    | s == X = "X"
+    | s == O = "O"
+    | s == Void = "_"
