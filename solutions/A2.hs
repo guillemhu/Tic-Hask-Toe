@@ -72,5 +72,10 @@ stringToMove xs
     | otherwise = (-1,-1)
 
 -- Q#10
-
-replaceSquareInRow = undefined
+replaceSquareInRow :: Player -> Int -> Row -> Row
+replaceSquareInRow p c r = if c>= 0 && c<_SIZE_ && length r == _SIZE_
+    then  x ++ [p] ++ (tail y) 
+    else r
+    where (x,y) = splitAt c r
+rsX = replaceSquareInRow X
+rsO = replaceSquareInRow O
