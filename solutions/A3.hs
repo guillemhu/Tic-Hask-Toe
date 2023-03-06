@@ -8,41 +8,55 @@ import Data.List (transpose)
 -- *** Assignment 3-1 ***
 
 -- Q#01
+showInts :: [Int] -> [String]
+showInts [] = []
+showInts (x:xs) = show x : showInts xs
 
-showInts = undefined
-
-
-_HEADER_ = undefined
+_HEADER_ :: String
+_HEADER_ = formatLine ( showInts  _RANGE_)
 
 -- Q#02
-
-showSquares = undefined
+showSquares :: [Square] -> [String]
+showSquares [] = []
+showSquares (x:xs) = if x == Void then ['_']: showSquares xs else show x : showSquares xs
 
 
 -- Q#03
-
-formatRows = undefined
+formatRows :: [Row] -> [String]
+formatRows [] = []
+formatRows (x:xs)= formatLine (showSquares x) : formatRows xs
 
 -- Q#04
-
-isColEmpty = undefined
+isColEmpty :: Row -> Int -> Bool
+isColEmpty [] c = False
+isColEmpty (x:xs) 0 = x == Void
+isColEmpty (x:xs) c = isColEmpty xs (c-1)
 
 -- Q#05
+dropFirstCol :: Board -> Board
+dropFirstCol [] = []
+dropFirstCol ([]:xs) = []: dropFirstCol xs
+dropFirstCol (x:xs) = tail x : dropFirstCol xs
 
-dropFirstCol = undefined
-
-
-dropLastCol = undefined
+dropLastCol :: Board -> Board
+dropLastCol [] = []
+dropLastCol ([]:xs) = []: dropLastCol xs
+dropLastCol (x:xs) = init x : dropLastCol xs
 
 -- Q#06
+getDiag1 :: Board -> Line
+getDiag1 [] = []
+getDiag1 ([]:xs) = getDiag1 (dropFirstCol xs)
+getDiag1 (x:xs) = head x : getDiag1 (dropFirstCol xs)
 
-getDiag1 = undefined
 
+getDiag2 :: Board -> Line
+getDiag2 [] = []
+getDiag2 ([]:xs) = getDiag2 (dropLastCol xs)
+getDiag2 (x:xs) = last x : getDiag2 (dropLastCol xs)
 
-getDiag2 = undefined
-
-
-getAllLines = undefined
+getAllLines :: Board -> [Line]
+getAllLines xs = concat [concat [xs, transpose xs], [getDiag1 xs, getDiag2 xs] ]
 
 -- *** Assignment 3-2 ***
 
